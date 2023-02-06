@@ -6,6 +6,7 @@ import pandas as pd
 from .constraint import *
 from .grid import *
 from .solve import *
+from .solve_linear import solve_linear
 
 def cmd_solve(args):
     df = pd.read_csv(args.csv, header=None)
@@ -15,7 +16,7 @@ def cmd_solve(args):
     grid.parse_df(df)
 
     # solve
-    grid2 = solve(grid)
+    grid2 = solve_linear(grid)
     df2 = grid2.df()
     df2.to_csv("solution.csv", header=False, index=False)
     
@@ -103,5 +104,6 @@ def main():
     else:
         parser.print_help()
 
+    
 if __name__ == "__main__":
     main()

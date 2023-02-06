@@ -14,7 +14,6 @@ solution back to CSV:
 
 ![](images/cross-sums-solution.png?raw=true)
 
-The solver is rather brute force, and not very efficiently written.
-It was kind fun writing the function to generate possible
-combinations/permutations of a particular constraint as a recursive
-generator.
+The solver uses the linear programming library PuLP which has clever
+syntax for defining the constraints.  Some test puzzles solve in less
+than a second.

@@ -8,7 +8,7 @@ RUN apt-get update && \
     python3-pip \
     && rm -rf /var/lib/apt/lists
 
-RUN pip3 install pandas
+RUN pip3 install pandas scipy pulp
 
 COPY /python /crosssums
 ENV PYTHONPATH=/
