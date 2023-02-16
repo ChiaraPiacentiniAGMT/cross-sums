@@ -1,4 +1,4 @@
-FROM ubuntu:21.10
+FROM ubuntu:22.04
 
 RUN apt-get update && \
     DEBIAN_FRONTEND="noninteractive" \
@@ -8,7 +8,7 @@ RUN apt-get update && \
     python3-pip \
     && rm -rf /var/lib/apt/lists
 
-RUN pip3 install pandas scipy pulp
+RUN pip3 install pandas scipy pulp ortools
 
 COPY /python /crosssums
 ENV PYTHONPATH=/

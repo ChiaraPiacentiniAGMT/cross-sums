@@ -7,6 +7,15 @@ from .constraint import *
 from .grid import *
 from .solve import *
 from .solve_linear import solve_linear
+from .solve_cp import solve_cp
+from .solve import solve as solve_custom
+
+# dict name -> solve function
+ALGORITHMS = {
+    "ip": solve_linear,
+    "cp": solve_cp,
+    "custom": solve_custom,
+}
 
 def cmd_solve(args):
     df = pd.read_csv(args.csv, header=None)
@@ -15,8 +24,11 @@ def cmd_solve(args):
     grid = Grid()
     grid.parse_df(df)
 
+    # get the solve function
+    solve_fnc = ALGORITHMS[args.algo]
+
     # solve
-    grid2 = solve_linear(grid)
+    grid2 = solve_fnc(grid)
     df2 = grid2.df()
     df2.to_csv("solution.csv", header=False, index=False)
     
@@ -56,6 +68,11 @@ def get_parser():
     p = subparsers.add_parser(
         "solve",
         help="read a CSV file representing a puzzle and output solution")
+    p.add_argument("-a",
+        "--algo",
+        choices=ALGORITHMS.keys(),
+        help=f"Select a algorithm from {list(ALGORITHMS.keys())}",
+        default="ip")
     p.add_argument(
         "csv",
         help="CSV file containing puzzle description")

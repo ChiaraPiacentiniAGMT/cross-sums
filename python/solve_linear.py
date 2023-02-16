@@ -54,7 +54,8 @@ class Solver:
 
     def solve(self):
         # solve the problem
-        self.prob.solve()
+        self.prob.solve(pulp.PULP_CBC_CMD(msg=False))
+        print(f"Total time {self.prob.solutionTime} s")
 
         # create a copy of the input grid to store the solution
         grid = self.grid.clone()
